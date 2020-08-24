@@ -32,11 +32,12 @@ public class SwiftqrscanPlugin: NSObject, FlutterPlugin {
             }
     
             if hostViewController != nil {
-                let backIconKey = registrar.lookupKey(forAsset: "assets/back.png", fromPackage: "qrscan")
+                let backIconKey = registrar.lookupKey(forAsset: "assets/icon_return.png", fromPackage: "qrscan")
                 if let backIconPath = Bundle.main.path(forResource: backIconKey, ofType: nil) {
                     scanController.backImage = UIImage(imageLiteralResourceName: backIconPath)
                 }
                 let flashlightKey = registrar.lookupKey(forAsset: "assets/flashlight.png", fromPackage: "qrscan")
+                scanController.flashlightImage.hidden=false;
                 if let flashlightPath = Bundle.main.path(forResource: flashlightKey, ofType: nil) {
                     scanController.flashlightImage = UIImage(imageLiteralResourceName: flashlightPath)
                 }

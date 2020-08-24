@@ -10,6 +10,7 @@ enum qrscanError: Error {
 
 enum qrscanArguKey: String {
     case title = "TITLE"
+    case desc = "DESC"
     case barColor = "BAR_COLOR"
     case titleColor = "TITLE_COLOR"
     case flashLightEnable = "FLASHLIGHT"
