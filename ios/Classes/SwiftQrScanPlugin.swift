@@ -1,7 +1,7 @@
 import Flutter
 import UIKit
 
-public class SwiftqrscanPlugin: NSObject, FlutterPlugin {
+public class SwiftQrScanPlugin: NSObject, FlutterPlugin {
     var registrar: FlutterPluginRegistrar!
 
     var result: FlutterResult?
@@ -10,7 +10,7 @@ public class SwiftqrscanPlugin: NSObject, FlutterPlugin {
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "qrscan", binaryMessenger: registrar.messenger())
-        let instance = SwiftqrscanPlugin()
+        let instance = SwiftQrScanPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         if let delegate = UIApplication.shared.delegate , let window = delegate.window, let root = window?.rootViewController {
             instance.hostViewController = root
@@ -51,7 +51,7 @@ public class SwiftqrscanPlugin: NSObject, FlutterPlugin {
     }
 }
 
-extension SwiftqrscanPlugin: qrscannerDelegate {
+extension SwiftQrScanPlugin: qrscannerDelegate {
     func didScanBarcodeWithResult(code: String) {
         if let channelResult = result {
             channelResult(code as NSString)
