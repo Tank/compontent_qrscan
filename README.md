@@ -1,0 +1,1 @@
+# compontent_qrscan
