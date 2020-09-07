@@ -37,11 +37,10 @@ public class SwiftQrScanPlugin: NSObject, FlutterPlugin {
                     scanController.backImage = UIImage(imageLiteralResourceName: backIconPath)
                 }
                 let flashlightKey = registrar.lookupKey(forAsset: "assets/flashlight.png", fromPackage: "qrscan")
-                scanController.flashlightImage.hidden=false;
                 if let flashlightPath = Bundle.main.path(forResource: flashlightKey, ofType: nil) {
                     scanController.flashlightImage = UIImage(imageLiteralResourceName: flashlightPath)
                 }
-                
+                      scanController.flashlightImage.hidden=false;
                 hostViewController.present(navigationController, animated: true, completion: nil)
             }
         default:
