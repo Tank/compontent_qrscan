@@ -66,13 +66,14 @@ class qrscannerController: UIViewController {
     var crosshairView: CrosshairView! = nil
     let backButton: UIButton = UIButton(type: .custom)
     let flashlightButton: UIButton = UIButton(type: .custom)
-    let navButtonFrame = CGRect(x: 0, y: 0, width: 20 , height: 20)
+    let navButtonFrame = CGRect(x: 0, y: 0, width: 2, height: 2)
     var tintColor: UIColor = UIColor.white
     var barColor: UIColor = UIColor.clear
-    var squareColor: UIColor = UIColor.orange
-    var scannerColor: UIColor = UIColor.orange
+    var squareColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+    var scannerColor: UIColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
     
     var barTitle: String = Localizable.ScanPage.scannerTitle.localized  // "掃描 QRcode"
+    var barDesc: String = Localizable.ScanPage.scannerDesc.localized  // 描述
     var flashLightEnable: Bool = true
     var backImage: UIImage?
     var flashlightImage: UIImage?
@@ -163,7 +164,6 @@ class qrscannerController: UIViewController {
                       self.addObservers()
                       self.session.startRunning()
                       self.isSessionRunning = self.session.isRunning
-                      
                   case .notAuthorized:
                       DispatchQueue.main.async {
                        let alertController = UIAlertController(title: Localizable.ScanPage.scannerTitle.localized, message: "\(Localizable.ScanPage.cameraPermisionNonOpen.localized)", preferredStyle: .alert)
@@ -358,15 +358,19 @@ class qrscannerController: UIViewController {
         }
         
         if let squareColorHex: String = qrscanArguKey.squareColor.getKeyValue(dictionary: argumentDictionary)  {
-            squareColor = UIColor(hexString: squareColorHex) ?? UIColor.orange
+            squareColor = UIColor(hexString: squareColorHex) ?? UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         }
         
         if let scannerColorHex: String = qrscanArguKey.scannerColor.getKeyValue(dictionary: argumentDictionary)  {
-            scannerColor = UIColor(hexString: scannerColorHex) ?? UIColor.orange
+            scannerColor = UIColor(hexString: scannerColorHex) ?? UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         }
         
         if let newBarTitle: String = qrscanArguKey.title.getKeyValue(dictionary: argumentDictionary)  {
             barTitle = newBarTitle
+        }
+
+        if let newBarDesc: String = qrscanArguKey.desc.getKeyValue(dictionary: argumentDictionary)  {
+            barDesc = newBarDesc
         }
         
         if let flashLightEnableString: String = qrscanArguKey.flashLightEnable.getKeyValue(dictionary: argumentDictionary), let enableInt = Int(flashLightEnableString)  {
@@ -409,7 +413,21 @@ class qrscannerController: UIViewController {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: flashlightButton)
         }
         
-        self.navigationItem.title = barTitle
+        // self.navigationItem.title = barTitle
+         let titleText = UILabel(frame:CGRect(x: 0, y: UIScreen.main.bounds.height/2+130, width:UIScreen.main.bounds.width, height:100))
+        titleText.textColor = UIColor.white 
+        titleText.textAlignment = .center
+        titleText.adjustsFontSizeToFitWidth = true
+        titleText.text = barTitle
+        self.view.addSubview(titleText);
+
+        let descText = UILabel(frame:CGRect(x: 0, y: UIScreen.main.bounds.height/2+170, width:UIScreen.main.bounds.width, height:100))
+        descText.textColor = UIColor.white 
+        descText.textAlignment = .center
+        descText.adjustsFontSizeToFitWidth = true
+        descText.text = barDesc
+        self.view.addSubview(descText);
+
         let textAttributes = [NSAttributedString.Key.foregroundColor:tintColor]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
     }

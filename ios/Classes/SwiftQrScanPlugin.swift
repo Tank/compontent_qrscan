@@ -7,7 +7,15 @@ public class SwiftQrScanPlugin: NSObject, FlutterPlugin {
     var result: FlutterResult?
     var hostViewController: UIViewController!
 
-    
+     func resizeImage(image: UIImage, newWidth: CGFloat ,newHeight: CGFloat) -> UIImage {
+        let scale = newWidth / image.size.width
+        UIGraphicsBeginImageContext(CGSize(width:newWidth, height:newHeight))
+        image.draw(in: CGRect(x: 0 , y: 0, width: newWidth, height: newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage!
+     }
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "qrscan", binaryMessenger: registrar.messenger())
         let instance = SwiftQrScanPlugin()
@@ -32,15 +40,15 @@ public class SwiftQrScanPlugin: NSObject, FlutterPlugin {
             }
     
             if hostViewController != nil {
-                let backIconKey = registrar.lookupKey(forAsset: "assets/icon_return.png", fromPackage: "qrscan")
+                let backIconKey = registrar.lookupKey(forAsset: "assets/back.png", fromPackage: "qrscan")
                 if let backIconPath = Bundle.main.path(forResource: backIconKey, ofType: nil) {
-                    scanController.backImage = UIImage(imageLiteralResourceName: backIconPath)
+                    scanController.backImage = resizeImage(image:UIImage(imageLiteralResourceName: backIconPath),newWidth:22,newHeight:22)
+                 
                 }
-                let flashlightKey = registrar.lookupKey(forAsset: "assets/flashlight.png", fromPackage: "qrscan")
-                if let flashlightPath = Bundle.main.path(forResource: flashlightKey, ofType: nil) {
-                    scanController.flashlightImage = UIImage(imageLiteralResourceName: flashlightPath)
-                }
-                    //   scanController.flashlightImage.hidden=true;
+                // let flashlightKey = registrar.lookupKey(forAsset: "assets/flashlight.png", fromPackage: "qrscan")
+                // if let flashlightPath = Bundle.main.path(forResource: flashlightKey, ofType: nil) {
+                //     scanController.flashlightImage = UIImage(imageLiteralResourceName: flashlightPath)
+                // }
                 hostViewController.present(navigationController, animated: true, completion: nil)
             }
         default:

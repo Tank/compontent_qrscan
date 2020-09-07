@@ -128,7 +128,7 @@ class CrosshairView: UIView {
     override func draw(_ rect: CGRect) {
 
         if let context = UIGraphicsGetCurrentContext() {
-            context.setLineWidth(5.0)
+            context.setLineWidth(2.0)
             context.setStrokeColor(color.cgColor)
             
             // top left corner

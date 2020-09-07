@@ -19,6 +19,7 @@ enum Localizable {
     enum ScanPage: String, LocalizableDelegate {
         case cameraPermisionNonOpen
         case scannerTitle
+        case scannerDesc
         case goImmediately
         case deviceNotSupport
     }
