@@ -1,7 +1,7 @@
 import Flutter
 import UIKit
 
-public class SwiftqrscanPlugin: NSObject, FlutterPlugin {
+public class SwiftQrScanPlugin: NSObject, FlutterPlugin {
     var registrar: FlutterPluginRegistrar!
 
     var result: FlutterResult?
@@ -10,7 +10,7 @@ public class SwiftqrscanPlugin: NSObject, FlutterPlugin {
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "qrscan", binaryMessenger: registrar.messenger())
-        let instance = SwiftqrscanPlugin()
+        let instance = SwiftQrScanPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
         if let delegate = UIApplication.shared.delegate , let window = delegate.window, let root = window?.rootViewController {
             instance.hostViewController = root
@@ -37,11 +37,10 @@ public class SwiftqrscanPlugin: NSObject, FlutterPlugin {
                     scanController.backImage = UIImage(imageLiteralResourceName: backIconPath)
                 }
                 let flashlightKey = registrar.lookupKey(forAsset: "assets/flashlight.png", fromPackage: "qrscan")
-                scanController.flashlightImage.hidden=false;
                 if let flashlightPath = Bundle.main.path(forResource: flashlightKey, ofType: nil) {
                     scanController.flashlightImage = UIImage(imageLiteralResourceName: flashlightPath)
                 }
-                
+                    //   scanController.flashlightImage.hidden=true;
                 hostViewController.present(navigationController, animated: true, completion: nil)
             }
         default:
@@ -51,7 +50,7 @@ public class SwiftqrscanPlugin: NSObject, FlutterPlugin {
     }
 }
 
-extension SwiftqrscanPlugin: qrscannerDelegate {
+extension SwiftQrScanPlugin: qrscannerDelegate {
     func didScanBarcodeWithResult(code: String) {
         if let channelResult = result {
             channelResult(code as NSString)

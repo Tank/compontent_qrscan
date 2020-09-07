@@ -1,4 +1,4 @@
 #import <Flutter/Flutter.h>
 
-@interface qrscanPlugin : NSObject<FlutterPlugin>
+@interface QrScanPlugin : NSObject<FlutterPlugin>
 @end
