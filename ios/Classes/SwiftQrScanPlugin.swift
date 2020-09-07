@@ -40,7 +40,7 @@ public class SwiftQrScanPlugin: NSObject, FlutterPlugin {
                 if let flashlightPath = Bundle.main.path(forResource: flashlightKey, ofType: nil) {
                     scanController.flashlightImage = UIImage(imageLiteralResourceName: flashlightPath)
                 }
-                      scanController.flashlightImage.hidden=true;
+                    //   scanController.flashlightImage.hidden=true;
                 hostViewController.present(navigationController, animated: true, completion: nil)
             }
         default:
